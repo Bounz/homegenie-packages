@@ -1,0 +1,25 @@
+{
+    "author": "Alexander Sidorenko",
+    "version": "v1.0",
+    "title": "Z-Wave.Me Floor Thermostat",
+    "description": "Add support for -Wave.Me Floor Thermostat",
+    "published": "2015-06-16T21:00:00Z",
+    "sourcecode": "",
+    "homepage": "http://www.homegenie.it/forum/index.php?topic=940.0", 
+    "widgets": 
+    [ 
+        { 
+            "file": "Bounz_Z-Wave.Me_thermostat.zip"
+        },
+    ],
+    "programs": [
+        { 
+            "file": "Z-Wave_Thermostat_Poll.hgx",
+            "name":"Z-Wave.Me Floor Thermostat Poll",
+            "description": "Global Cache driver for IP2IR and WF2IR",
+            "uid": "100201",
+            "group": "Z-Wave" 
+        }
+    ],
+    "interfaces": [ ]
+}
