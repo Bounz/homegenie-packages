@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ProgramBlock xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ConditionType>OnTrue</ConditionType>
+  <Conditions />
+  <Commands />
+  <ScriptCondition>Program.AddOption("PollInterval", "120", "Poll Interval (seconds)", "text");
+//Program.AddFeature("HomeAutomation.ZWave", "Thermostat", "HomeGenie.ZWaveLevelPoll", "Poll module level", "checkbox");
+Program.Run();
+</ScriptCondition>
+  <ScriptSource>while (Program.IsEnabled)
+{
+  // basic get will returns current device level 
+  Modules.InDomain("HomeAutomation.ZWave").OfDeviceType("Thermostat").Each((module) =&gt; {
+    Program.Notify("Z-Wave Thermostat Poll", "Polling thermostat " + module.Instance.Address + "&lt;br&gt;" + module.Instance.Name);
+    module.Command("SensorMultiLevel.Get").Execute();
+    Pause(Program.Option("PollInterval").DecimalValue);
+    return false; // do not break, continue iterating...
+  });
+  // pause between each poll
+  var pause = Program.Option("PollInterval").DecimalValue;
+  if (pause &lt; 15)
+  {
+    pause = 15;
+    Program.Notify("Z-Wave Thermostat Poll", "Poll interval seconds must be &gt;= 15!");
+  }
+  Pause(pause);
+}
+</ScriptSource>
+  <ScriptErrors />
+  <Domain>HomeAutomation.HomeGenie.Automation</Domain>
+  <Address>92</Address>
+  <Name>Z-Wave.Me Floor Thermostat Poll</Name>
+  <Description />
+  <Group>Z-Wave</Group>
+  <Features />
+  <ActivationTime xsi:nil="true" />
+  <TriggerTime>2016-01-10T19:35:37.5208Z</TriggerTime>
+  <Type>CSharp</Type>
+  <IsEnabled>true</IsEnabled>
+</ProgramBlock>
